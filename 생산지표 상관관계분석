@@ -1,0 +1,142 @@
+#21년 1월~22년 4월까지 데이터
+
+#패키지 설치
+install.packages("readxl")
+library(readxl)
+#데이터 불러오기
+data_tuna = as.data.frame(read_excel("참치생산지표.xlsx"))
+
+View(data_tuna)
+str(data_tuna)
+head(data_tuna)
+
+#test 데이터셋 생성
+test_tuna <- data_tuna
+cor(test_tuna)
+plot(test_tuna)
+
+#corplot패키지 설치
+install.packages("corrplot")
+
+library(corrplot)
+
+test_tuna1 <- cor(test_tuna)
+
+test_tuna1
+
+corrplot(test_tuna1, method="number", tl.srt=30) #output
+corrplot(test_tuna1, method="pie",tl.srt=30) #output2
+
+
+corrplot(test_tuna1, method="shade", # 색 입힌 사각형
+         addshade="all", # 상관관계 방향선 제시
+         shade.col=NA, # 상관관계 방향선 미제시
+         tl.col="red", # 라벨 색 지정
+         tl.srt=30, # 위쪽 라벨 회전 각도
+         diag=FALSE, # 대각선 값 미제시
+         addCoef.col="black", # 상관계수 숫자 색
+         order="FPC" # "FPC": First Principle Component
+         #"hclust" : hierarchical clustering
+         # "AOE" : Angular Order of Eigenvectors
+         )
+
+
+corrplot(test_tuna1, method="shade", # 색 입힌 사각형
+         addshade="all", # 상관관계 방향선 제시
+         shade.col=NA, # 상관관계 방향선 미제시
+         tl.col="red", # 라벨 색 지정
+         tl.srt=30, # 위쪽 라벨 회전 각도
+         diag=FALSE, # 대각선 값 미제시
+         addCoef.col="black", # 상관계수 숫자 색
+         order= #"FPC" # "FPC": First Principle Component
+         "hclust" #: hierarchical clustering
+         # "AOE" : Angular Order of Eigenvectors
+)
+
+corrplot(test_tuna1, method="shade", # 색 입힌 사각형
+         addshade="all", # 상관관계 방향선 제시
+         shade.col=NA, # 상관관계 방향선 미제시
+         tl.col="red", # 라벨 색 지정
+         tl.srt=30, # 위쪽 라벨 회전 각도
+         diag=FALSE, # 대각선 값 미제시
+         addCoef.col="black", # 상관계수 숫자 색
+         order= #"FPC" # "FPC": First Principle Component
+           #"hclust" #: hierarchical clustering
+         "AOE" #: Angular Order of Eigenvectors
+)
+
+
+
+install.packages("PerformanceAnalytics")
+library(PerformanceAnalytics)
+chart.Correlation(test_tuna1, histogram=TRUE, pch=20)
+
+#20년 1월~22년 4월까지 데이터
+
+#데이터 불러오기
+data_tuna2 = as.data.frame(read_excel("참치생산지표2.xlsx"))
+
+View(data_tuna2)
+str(data_tuna2)
+head(data_tuna2)
+
+#test 데이터셋 생성
+test_tuna2 <- data_tuna2
+cor(test_tuna2)
+plot(test_tuna2)
+
+#corplot패키지 설치
+install.packages("corrplot")
+
+library(corrplot)
+
+test_tuna3 <- cor(test_tuna2)
+
+test_tuna3
+
+corrplot(test_tuna3, method="number", tl.srt=30) #output
+corrplot(test_tuna3, method="pie",tl.srt=30) #output2
+
+
+corrplot(test_tuna3, method="shade", # 색 입힌 사각형
+         addshade="all", # 상관관계 방향선 제시
+         shade.col=NA, # 상관관계 방향선 미제시
+         tl.col="red", # 라벨 색 지정
+         tl.srt=30, # 위쪽 라벨 회전 각도
+         diag=FALSE, # 대각선 값 미제시
+         addCoef.col="black", # 상관계수 숫자 색
+         order="FPC" # "FPC": First Principle Component
+         #"hclust" : hierarchical clustering
+         # "AOE" : Angular Order of Eigenvectors
+)
+
+
+corrplot(test_tuna3, method="shade", # 색 입힌 사각형
+         addshade="all", # 상관관계 방향선 제시
+         shade.col=NA, # 상관관계 방향선 미제시
+         tl.col="red", # 라벨 색 지정
+         tl.srt=30, # 위쪽 라벨 회전 각도
+         diag=FALSE, # 대각선 값 미제시
+         addCoef.col="black", # 상관계수 숫자 색
+         order= #"FPC" # "FPC": First Principle Component
+           "hclust" #: hierarchical clustering
+         # "AOE" : Angular Order of Eigenvectors
+)
+
+corrplot(test_tuna3, method="shade", # 색 입힌 사각형
+         addshade="all", # 상관관계 방향선 제시
+         shade.col=NA, # 상관관계 방향선 미제시
+         tl.col="red", # 라벨 색 지정
+         tl.srt=30, # 위쪽 라벨 회전 각도
+         diag=FALSE, # 대각선 값 미제시
+         addCoef.col="black", # 상관계수 숫자 색
+         order= #"FPC" # "FPC": First Principle Component
+           #"hclust" #: hierarchical clustering
+           "AOE" #: Angular Order of Eigenvectors
+)
+
+
+
+install.packages("PerformanceAnalytics")
+library(PerformanceAnalytics)
+chart.Correlation(test_tuna3, histogram=TRUE, pch=20)
