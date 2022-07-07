@@ -1,0 +1,111 @@
+
+#20년 1월~22년 4월까지 데이터
+
+library(readxl)
+
+#데이터 불러오기
+data_tuna3 = as.data.frame(read_excel("참치생산지표3.xlsx"))
+
+View(data_tuna3)
+str(data_tuna3)
+
+
+#test 데이터셋 생성
+test_tuna3 <- data_tuna3
+
+fit <- lm(production~yield+productivity+workforce+hour, data = test_tuna3) 
+
+#상관계수 확인
+fit
+
+#y(production=참치생산실적)와 각각의 독립변수 (X)에 대한 산점도
+
+plot(production~.,data=test_tuna3)
+
+plot(fit)
+
+#이상치제거
+
+fit <- lm(production~yield+productivity+workforce+hour, data = test_tuna3[-c(17,20,23),])
+
+
+#유의성 확인 
+
+summary(fit)
+
+
+#유의하지 않은 변수 제거
+
+#forward방식
+fit.con <- lm(production~1,data = test_tuna3)
+
+fit.forward <- step(fit.con,scope=list(lower=fit.con,upper=fit),direction = "forward")
+
+summary(fit.forward)
+
+#backward방식
+fit.backward <- step(fit, scope = list(lower = fit.con, upper = fit), 
+                     
+                     direction = "backward")
+
+summary(fit.backward)
+
+#stepwise방식
+
+fit.both <- step(fit.con, scope = list(lower = fit.con, upper = fit), direction = "both")
+
+summary(fit.both)
+
+
+
+#산점도 그리기 
+
+pairs.panels(test_tuna3[names(test_tuna3)])
+
+
+#다중공선성 확인
+install.packages("car")
+library(car)
+
+install.packages("psych")
+library(psych)
+
+car::vif(fit) #4보다 크면 다중공선성 있음
+sqrt(car::vif(fit)) > 2 
+
+
+#생산실적 예측 (점)
+
+pre <- predict(fit.forward, newdata = test_tuna3)
+pre <- as.data.frame(pre)
+head(pre)
+
+write.csv(pre, file="predict_production.csv")
+
+#생산실적 예측 (구간)
+
+pre <- predict(fit.forward, newdata = test_tuna3, interval = "predict")
+
+pre <- as.data.frame(pre)
+
+head(pre)
+
+
+#실제 값과의 예측비율확인
+
+tf <- NA
+
+pre <- cbind(pre, tf)
+
+
+pre$tf[test_tuna3$production>= pre$lwr & test_tuna3$production <= pre$upr] <- T
+
+pre$tf[is.na(pre$tf)] <- F
+
+
+head(pre)
+
+sum(pre$tf=="TRUE")/dim(pre)[1] 
+
+
+write.csv(pre, file="predict_production2.csv")
